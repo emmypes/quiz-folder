@@ -38,9 +38,12 @@ var span= document.querySelectorAll('span');
 var i=0;
 var score=0;
 
+
     
 function displayQuestion(){
-   
+   for(var a=0;a<span.length;a++){
+    span[a].style.background='none';
+   }
     question.innerHTML= 'Q.'+(i+1)+' '+questionBank[i].question;
     option0.innerHTML= questionBank[i].option[0];
     option1.innerHTML= questionBank[i].option[1];
@@ -55,27 +58,22 @@ function previousQuestion(){
         displayQuestion();
     }
 }
-function nextQuestion(){
-    if(i<questionBank.length-1)
-    {
-        i=i+1;
-        displayQuestion();
-    }}
+
 
 previous.addEventListener('click',previousQuestion);
 
 next.addEventListener('click',nextQuestion);
 
-function calcScore(){
-    if(innerHTML===questionBank[i].answer && score<questionBank.length)
+function calcScore(e){
+    if(e.innerHTML===questionBank[i].answer && score<questionBank.length)
     {
     score= score+1;
-    document.getElementById('score');
+    document.getElementById(e.id);
     }
     else{
-    document. getElementById (' score');
+    document. getElementById (e.id);
     }
-    setTimeout (nextQuestion, 300);
+    // setTimeout(nextQuestion,300);
     }
 function nextQuestion(){
     if(i<questionBank.length-1)
@@ -85,8 +83,31 @@ function nextQuestion(){
     }
     else{
         points.innerHTML= score+ '/'+ questionBank.length;
-        quizContainer.style.display= 'none'
+        quizContainer.style.display= 'none';
+        scoreboard.style.display='block';
     }
 }
 
+displayQuestion();
+
+
+
+next.addEventListener('click',nextQuestion);
+
+
+function backToQuiz(){
+    location.reload();
+}
+function checkAnswer(){
+    var answerBank= document.getElementById('answerBank');
+    var answers= document.getElementById('answers');
+    answerBank.style.display= 'block';
+    scoreboard.style.display= 'none';
+    for(var a=0;a<questionBank.length;a++)
+    {
+        var list= document.createElement('li');
+        list.innerHTML= questionBank[a].answer;
+        answers.appendChild(list);
+    }
+}
 displayQuestion();
